@@ -1,48 +1,73 @@
-# PHP Ratchet Websocket Benchmark Server
+# PHP Websocket Benchmark Server (Docker)
 
-<b>If interested in the results, read the [Full Report](https://www.researchgate.net/publication/348993267_An_Analysis_of_the_Performance_of_Websockets_in_Various_Programming_Languages_and_Libraries) 
-or the shortened [Blog Post](https://matttomasetti.medium.com/websocket-performance-comparison-10dc89367055) 
-about this experiment.</b>
+Based on [PHP (Ratchet)](https://github.com/matttomasetti/PHP-Ratchet_Websocket-Benchmark-Server) repository, and
+[Websocket Performance Comparison](https://matttomasetti.medium.com/websocket-performance-comparison-10dc89367055) article,
+implemented few PHP Websocket servers to be compared with each other and other technologies (languages).
 
-This is a PHP (Ratchet) variation of websocket servers designed to 
-benchmark the performance of both reliability and speed of various 
-websocket implementations.
+* Ratchet is from the original repository, but moved to a subfolder.
+* OpenSwoole is widely used but turned out to be almost as slow as Ratchet.
+* **Workerman** is super fast.
 
-The other server variations can be found at the links below
- 
-### Benchmarking Client
-The benchmarking client can be found [here](https://github.com/matttomasetti/NodeJS_Websocket-Benchmark-Client)
 
-## Quick Set-Up
-```
-docker run -p 8080:8080 mtomasetti/php-ratchet_websocket-benchmark-server
-```
-That's it! The websocket server will automatically start on **port 8080**
+## Benchmarking client
 
-## Dockerfile Set-Up
-```
-docker build . -t websocket_benchmark/php
-docker run -p 8080:8080 websocket_benchmark/php
+The benchmarking client can be found [here](https://github.com/wiz00/Websocket-Benchmark-Client)
+
+## Install & run
+
+### Ratchet PHP websocket server
+
+```bash
+docker build . -f Dockerfile.Ratchet -t websocket_benchmark/php-ratchet && \
+docker run --rm -p 8080:8080 websocket_benchmark/php-ratchet
 ```
 
-## Manual Set-up
-#### Requirements
-In order for this websocket server to compile and run, it requires:
-* \>= PHP 7.4
-* Composer
+or
 
-It is recommended that you use the ready-made environment via the
-included Dockerfile
-
-#### Install & Run
-```
-composer update
-php bin/php_ratchet_websocket_benchmark.php
+```bash
+./start-ratchet.sh
 ```
 
-## Links
+### OpenSwoole PHP websocket server
 
-#### GitHub
+```bash
+docker build . -f Dockerfile.Swoole -t websocket_benchmark/php-swoole && \
+docker run --rm -p 8080:8080 websocket_benchmark/php-swoole
+```
+
+or
+
+```bash
+./start-swoole.sh
+```
+
+### Workerman PHP websocket server
+
+```bash
+docker build . -f Dockerfile.Workerman -t websocket_benchmark/php-workerman && \
+docker run --rm -p 8080:8080 websocket_benchmark/php-workerman
+```
+
+or
+
+```bash
+./start-workerman.sh
+```
+
+## Other websocket servers
+
+* [Node](https://github.com/wiz00/Websocket-Benchmark-Node)
+* [Python](https://github.com/wiz00/Websocket-Benchmark-Python)
+* [PHP](https://github.com/wiz00/Websocket-Benchmark-PHP) (current)
+* [Go](https://github.com/wiz00/Websocket-Benchmark-Go)
+
+## Original comparison
+
+* [Websocket Performance Comparison](https://matttomasetti.medium.com/websocket-performance-comparison-10dc89367055)
+* [Technical Report](https://www.researchgate.net/publication/348993267_An_Analysis_of_the_Performance_of_Websockets_in_Various_Programming_Languages_and_Libraries)
+
+## Original GitHub repositories
+
 * [Benchmarking Client (NodeJS)](https://github.com/matttomasetti/NodeJS_Websocket-Benchmark-Client)
 * [C (LWS)](https://github.com/matttomasetti/C-LWS_Websocket-Benchmark-Server)
 * [C++ (uWS)](https://github.com/matttomasetti/CPP-uWS_Websocket-Benchmark-Server)
@@ -55,17 +80,3 @@ php bin/php_ratchet_websocket_benchmark.php
 * [Python (Autobahn)](https://github.com/matttomasetti/Python-Autobahn_Websocket-Benchmark-Server)
 * [Python (Aiohttp)](https://github.com/matttomasetti/Python-Aiohttp_Websocket-Benchmark-Server)
 * [Rust (WebSocket)](https://github.com/matttomasetti/Rust-WebSocket_Websocket-Benchmark-Server)
-
-#### Docker Hub
-* [Benchmarking Client (NodeJS)](https://hub.docker.com/r/mtomasetti/nodejs_websocket-benchmark-client)
-* [C (LWS)](https://hub.docker.com/r/mtomasetti/c-lws_websocket-benchmark-server)
-* [C++ (uWS)](https://hub.docker.com/r/mtomasetti/cpp-uws_websocket-benchmark-server)
-* [C# (Fleck)](https://hub.docker.com/repository/docker/mtomasetti/cs-fleck_websocket-benchmark-server)
-* [Go (Gorilla)](https://hub.docker.com/r/mtomasetti/go-gorilla_websocket-benchmark-server)
-* [Java (WebSocket)](https://hub.docker.com/r/mtomasetti/java-websocket_websocket-benchmark-server)
-* [NodeJS (uWS)](https://hub.docker.com/r/mtomasetti/nodejs-uws_websocket-benchmark-server)
-* [PHP (Ratchet)](https://hub.docker.com/r/mtomasetti/php-ratchet_websocket-benchmark-server)
-* [Python (Websockets)](https://hub.docker.com/r/mtomasetti/python-websockets_websocket-benchmark-server)
-* [Python (Autobahn)](https://hub.docker.com/repository/docker/mtomasetti/python-autobahn_websocket-benchmark-server)
-* [Python (Aiohttp)](https://hub.docker.com/repository/docker/mtomasetti/python-aiohttp_websocket-benchmark-server)
-* [Rust (WebSocket)](https://hub.docker.com/r/mtomasetti/rust-websocket_websocket-benchmark-server)
