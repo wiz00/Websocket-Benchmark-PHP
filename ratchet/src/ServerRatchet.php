@@ -1,4 +1,5 @@
 <?php
+
 namespace Benchmark;
 
 use Ratchet\MessageComponentInterface;
@@ -9,9 +10,8 @@ use Ratchet\ConnectionInterface;
  * websocket server.
  * @package Benchmark
  */
-class Server implements MessageComponentInterface {
-
-
+class ServerRatchet implements MessageComponentInterface
+{
     /**
      * @var \SplObjectStorage object that stores all connect clients
      */
@@ -22,10 +22,10 @@ class Server implements MessageComponentInterface {
      * Server constructor.
      * Initializes the clients member property
      */
-    public function __construct() {
-
+    public function __construct()
+    {
         // object store for connected clients
-        $this->clients = new \SplObjectStorage;
+        $this->clients = new \SplObjectStorage();
     }
 
 
@@ -34,7 +34,8 @@ class Server implements MessageComponentInterface {
      * @param ConnectionInterface $conn The newly connected client
      * @return void
      */
-    public function onOpen(ConnectionInterface $conn): void {
+    public function onOpen(ConnectionInterface $conn): void
+    {
 
         // Store the new connection to send messages to later
         $this->clients->attach($conn);
@@ -52,7 +53,8 @@ class Server implements MessageComponentInterface {
      * @param string $msg The incoming message
      * @return void
      */
-    public function onMessage(ConnectionInterface $from, $msg): void {
+    public function onMessage(ConnectionInterface $from, $msg): void
+    {
 
         // decode incoming message into an associative array
         $incoming_message = json_decode($msg, true);
@@ -67,7 +69,8 @@ class Server implements MessageComponentInterface {
      * @param ConnectionInterface $conn The client that has disconnected
      * @return void
      */
-    public function onClose(ConnectionInterface $conn): void {
+    public function onClose(ConnectionInterface $conn): void
+    {
 
         // The connection is closed, remove it, as we can no longer send it messages
         $this->clients->detach($conn);
@@ -82,7 +85,8 @@ class Server implements MessageComponentInterface {
      * @param \Exception $e The exception being thrown
      * @return void
      */
-    public function onError(ConnectionInterface $conn, \Exception $e): void {
+    public function onError(ConnectionInterface $conn, \Exception $e): void
+    {
         echo "An error has occurred: {$e->getMessage()}\n";
 
         $conn->close();
@@ -93,7 +97,8 @@ class Server implements MessageComponentInterface {
      * Gets the current unix timestamp of the server
      * @return int The current unix timestamp
      */
-    private function getTimestamp(): int{
+    private function getTimestamp(): int
+    {
         return time();
     }
 
@@ -103,7 +108,8 @@ class Server implements MessageComponentInterface {
      * @param int $c The message count
      * @return string A JSON string containing the message count and the current timestamp
      */
-    private function getEvent(int $c): string{
+    private function getEvent(int $c): string
+    {
 
         //create an event array for the time that message "c" is received by the server
         $event = [
@@ -122,7 +128,8 @@ class Server implements MessageComponentInterface {
      * @param int $c The message count
      * @return void
      */
-    private function notify(ConnectionInterface $conn, int $c): void{
+    private function notify(ConnectionInterface $conn, int $c): void
+    {
 
         //send the given connection the event timestamp for message "c"
         $conn->send($this->getEvent($c));

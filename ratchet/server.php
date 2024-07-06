@@ -1,10 +1,14 @@
 <?php
+
+error_reporting(E_ALL ^ E_DEPRECATED);
+ini_set('memory_limit', '512M');
+
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
-use Benchmark\Server;
+use Benchmark\ServerRatchet as Server;
 
-require dirname(__DIR__) . '/vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
 // Generic Ratchet websocket server setup
 // Custom logic is contained within src/Server.php
@@ -14,7 +18,7 @@ $server = IoServer::factory(
             new Server()
         )
     ),
-    8080
+    8080,
 );
 
 $server->run();
