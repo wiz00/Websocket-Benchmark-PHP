@@ -1,0 +1,16 @@
+# as of 2024-07-05 OpenSwoole's PHP 8.3 images is not released yet
+FROM openswoole/swoole:php8.3-dev
+
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+WORKDIR /home/websocket
+
+# Add source files to docker image
+ADD swoole/ ./
+
+# Install composer packages
+RUN composer update
+
+EXPOSE 8080
+
+CMD ["php", "server.php"]

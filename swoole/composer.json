@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Benchmark\\": "src"
+        }
+    },
+    "require": {
+        "openswoole/core": "^22.1"
+    }
+}
