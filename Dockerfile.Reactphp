@@ -1,0 +1,29 @@
+FROM php:8.3-zts
+
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+# Although Workerman can work without Event library,
+# it is limited to 1024 connections and then it's not responding.
+
+RUN apt-get -y update \
+    && apt-get -y upgrade \
+    && apt-get -y install libevent-dev libssl-dev unzip
+
+RUN docker-php-ext-install pcntl
+RUN docker-php-ext-install sockets
+
+RUN echo '' | pecl install event \
+    # 'event' extension has to be loaded after 'sockets' extension, so put it at the end
+    && echo "extension=event.so" >> /usr/local/etc/php/conf.d/zzz-ext-event.ini
+
+WORKDIR /home/websocket
+
+# Add source files to docker image
+ADD reactphp/ ./
+
+# Install composer packages
+RUN composer update
+
+EXPOSE 8080
+
+CMD ["php", "server.php", "start"]

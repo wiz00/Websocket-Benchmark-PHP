@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Benchmark\\": "src"
+        }
+    },
+    "require": {
+        "workerman/workerman": "^4.1"
+    }
+}
