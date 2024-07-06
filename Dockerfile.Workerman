@@ -19,7 +19,7 @@ RUN echo '' | pecl install event \
 WORKDIR /home/websocket
 
 # Add source files to docker image
-ADD reactphp/ ./
+ADD workerman/ ./
 
 # Install composer packages
 RUN composer update
