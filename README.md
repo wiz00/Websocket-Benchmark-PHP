@@ -60,16 +60,16 @@ Tested on a Hetzner Cloud server instance CPX11 (2 vCPU x86 AMD EPYC™️ 7002 
 
 ![PHP Workerman vs Ratchet vs OpenSwoole on Docker on Hetzner Cloud VPS CPX11](assets/Hetzner_Cloud_CPX11_x86_PHP.png)
 
-This particular test was run on localhost using this [benchmarking client](https://github.com/wiz00/Websocket-Benchmark-Client) and with such settings:
+This particular test was run on localhost using this [benchmarking client](https://github.com/wiz00/Websocket-Benchmark-Client) and these settings:
 
 | Parameter | Value |
 | --- | --- |
-| Enter the number of test repetitions | 20 |
-| Enter the number of rounds per repetition | 30 |
+| Number of test repetitions | 20 |
+| Number of rounds per repetition | 30 |
 | Connections to be added per round | 100 |
 | Requests each connection makes per round | 100 |
 
-So the test is started from 100 connections sending 10k requests in total and ended up with 3000 connections sending 300k in total per round, and was repeated 20 times.
+So the test is started with 100 connections sending 10k requests in total and ended up with 3000 connections sending 300k in total per round, and was repeated 20 times.
 
 In the result, Workerman is insignificantly faster that Ratchet, and OpenSwoole turned out to be slow.
 
@@ -79,7 +79,7 @@ Also tested on a Hetzner Cloud server instance CX22 (2 vCPU x86 Intel® Xeon® G
 
 ![PHP Workerman vs Ratchet vs OpenSwoole on Docker on Hetzner Cloud VPS CX22](assets/Hetzner_Cloud_CX22_x86_PHP.png)
 
-I mention this test only because of Ratchet performance which is different from the above test.
+I mention this test only because of Ratchet performance which is different from the main test.
 
 ----
 
