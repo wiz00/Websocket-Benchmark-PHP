@@ -54,6 +54,43 @@ or
 ./start-workerman.sh
 ```
 
+## Comparison of PHP websocket servers performance
+
+Tested on a Hetzner Cloud server instance CPX11 (2 vCPU x86 AMD EPYC™️ 7002 series, 2 GB RAM) scoring 976 points in [Geekbench 5 Single-Core test](https://browser.geekbench.com/v5/cpu/22659970) (tests run using Docker containers).
+
+![PHP Workerman vs Ratchet vs OpenSwoole on Docker on Hetzner Cloud VPS CPX11](assets/Hetzner_Cloud_CPX11_x86_PHP.png)
+
+This particular test was run on localhost using this [benchmarking client](https://github.com/wiz00/Websocket-Benchmark-Client) and with such settings:
+
+| Parameter | Value |
+| --- | --- |
+| Enter the number of test repetitions | 20 |
+| Enter the number of rounds per repetition | 30 |
+| Connections to be added per round | 100 |
+| Requests each connection makes per round | 100 |
+
+So the test is started from 100 connections sending 10k requests in total and ended up with 3000 connections sending 300k in total per round, and was repeated 20 times.
+
+In the result, Workerman is insignificantly faster that Ratchet, and OpenSwoole turned out to be slow.
+
+----
+
+Also tested on a Hetzner Cloud server instance CX22 (2 vCPU x86 Intel® Xeon® Gold, 4 GB RAM) scoring 652 points in [Geekbench 5 Single-Core test](https://browser.geekbench.com/v5/cpu/22659914) (tests run using Docker containers) but with only 1 repetition of 20 rounds (because the instance if painfully slow).
+
+![PHP Workerman vs Ratchet vs OpenSwoole on Docker on Hetzner Cloud VPS CX22](assets/Hetzner_Cloud_CX22_x86_PHP.png)
+
+I mention this test only because of Ratchet performance which is different from the above test.
+
+----
+
+The same happens on 2021 MacBook Pro 16" (M1 Pro - Arm SoC), my daily driver:
+
+![PHP Workerman vs Ratchet vs OpenSwoole on Macbook Pro M1 Pro](assets/Apple_Silicon_M1_Pro_PHP.png)
+
+Despite the fact that each test had 20 repetitions here, the results aren't consistent, because I have *a lot* happening on the device. But the overall picture is clear.
+
+I'm not sure what happened to Ratchet in those tests. My personal favorite is Workerman which I've been using in production for years.
+
 ## Other websocket servers
 
 * [Node](https://github.com/wiz00/Websocket-Benchmark-Node)
